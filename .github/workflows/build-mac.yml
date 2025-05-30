@@ -1,34 +1,35 @@
 name: Build for MacOS
 
-on:  # 触发条件：当推送到 main 分支时自动构建
+on:
   push:
     branches: [ main ]
 
 jobs:
   build:
-    runs-on: macos-latest  # 使用 GitHub 的 MacOS 虚拟机
+    runs-on: macos-latest
     steps:
-      - name: Checkout code  # 拉取代码
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python  # 安装 Python
+      - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x'  # 自动选择最新 3.x 版本
+          python-version: '3.x'
 
-      - name: Install dependencies  # 安装项目依赖
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pyinstaller  # 安装 PyInstaller
+          pip install pyinstaller
 
-      - name: Build with PyInstaller  # 打包为 MacOS 应用
+      - name: Build with PyInstaller
         run: |
           pyinstaller --onefile --windowed --clean main.py
-          mv dist/main dist/mac_app  # 重命名输出文件（可选）
+          mkdir -p dist/mac_app  # 确保目标目录存在
+          mv dist/main dist/mac_app/  # 移动文件到目录中
 
-      - name: Upload Artifact  # 上传构建产物供下载
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: mac-executable
-          path: dist/mac_app/
+          path: dist/mac_app/main  # 直接指向具体文件（或目录）
