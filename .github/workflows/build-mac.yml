@@ -9,10 +9,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -29,7 +29,7 @@ jobs:
           mv dist/main dist/mac_app/  # 移动文件到目录中
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mac-executable
           path: dist/mac_app/main  # 直接指向具体文件（或目录）
