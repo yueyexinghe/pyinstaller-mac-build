@@ -28,7 +28,7 @@ jobs:
           mv dist/main dist/mac_app  # 重命名输出文件（可选）
 
       - name: Upload Artifact  # 上传构建产物供下载
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: mac-executable
           path: dist/mac_app/
